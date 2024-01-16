@@ -1,0 +1,22 @@
+{
+    "PM_Assistant": {
+        "model": "gpt-4-model-pm",
+        "api_key": "<OpenAI-Key-PM>",
+        "api_type": "openai"
+    },
+    "DevAssistant": {
+        "model": "gpt-4-model-dev",
+        "api_key": "<OpenAI-Key-Dev>",
+        "api_type": "openai"
+    },
+    "TestAssistant": {
+        "model": "gpt-4-model-test",
+        "api_key": "<OpenAI-Key-Test>",
+        "api_type": "openai"
+    },
+    "QCAssistant": {
+        "model": "gpt-4-model-qc",
+        "api_key": "<OpenAI-Key-QC>",
+        "api_type": "openai"
+    }
+}
