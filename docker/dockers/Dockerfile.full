@@ -16,7 +16,7 @@ WORKDIR /home/autogen
 
 # Set environment variable if needed
 ENV PATH="/home/autogen/.local/bin:$PATH"
-ENV OPENAI_API_KEY="{OPENAI_API_KEY}"
+ENV OPENAI_API_KEY="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"
 
 # Install Python packages
 RUN pip install --upgrade pip
