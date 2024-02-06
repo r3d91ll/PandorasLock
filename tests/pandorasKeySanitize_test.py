@@ -5,7 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from PandorasLock import PandorasKey
 
 # Get the absolute path to the pandorasconfig.json file
-config_path = os.path.abspath(os.path.join(os.path.dirname(__name__), '..', 'PandorasLock', 'pandorasconfig.json'))
+config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'PandorasLock', 'pandorasconfig.json'))
 
 # Initialize PandorasKey with the correct config path
 pandoras_key = PandorasKey(config_path)
