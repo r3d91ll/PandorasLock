@@ -2,8 +2,6 @@ import os
 import json
 import re
 import logging
-import random
-import string
 
 class PandorasKey:
     """
@@ -27,28 +25,31 @@ class PandorasKey:
         except FileNotFoundError:
             logging.error(f"Config file {self.config_path} not found.")
             return {}
-
+        
     def sanitize(self, text):
-        account_num_counter = 0
-        resource_name_counter = 0
+        placeholder_counter = {}
 
-        for pattern, replacement in self.patterns.items():
+        for key, pattern in self.patterns.items():
+            placeholder = key.replace("_PATTERN", "")
             matches = re.finditer(pattern, text)
             for match in matches:
-                # Generate unique placeholders
-                unique_account_placeholder = f"{{arnAccountNum{account_num_counter}}}"
-                unique_resource_placeholder = f"{{arnName{resource_name_counter}}}"
+                if "ARN" in key or "ID" in key:
+                    # For ARN and ID patterns with a single capture group
+                    found_match = match.group(1)
+                else:
+                    # General handling for other patterns
+                    found_match = match.group(0)
 
-                # Replace account number and resource name in the replacement string
-                modified_replacement = replacement.replace("{arnAccountNum}", unique_account_placeholder)
-                modified_replacement = modified_replacement.replace("{arnName}", unique_resource_placeholder)
+                existing_key = next((k for k, v in self.sanitization_map.items() if v == found_match), None)
 
-                # Replace in text
-                text = re.sub(pattern, modified_replacement, text, count=1)
-
-                # Increment counters
-                account_num_counter += 1
-                resource_name_counter += 1
+                if existing_key:
+                    text = text.replace(found_match, existing_key)
+                else:
+                    placeholder_counter.setdefault(placeholder, -1)
+                    placeholder_counter[placeholder] += 1
+                    unique_placeholder = f"{{{placeholder}{placeholder_counter[placeholder]}}}"
+                    self.sanitization_map[unique_placeholder] = found_match
+                    text = text.replace(found_match, unique_placeholder)
 
         return text
 
@@ -60,3 +61,8 @@ class PandorasKey:
             text = text.replace(sanitized, original)
         return text
 
+    def clear_cache(self):
+        """
+        Clear the sanitization map.
+        """
+        self.sanitization_map.clear()
