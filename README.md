@@ -26,6 +26,7 @@ PandorasKey is a versatile Python module designed for sanitizing sensitive infor
 
 ## Usage Example
 
+
 ```python
 from PandorasKey import PandorasKey
 
