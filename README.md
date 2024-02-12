@@ -1,73 +1,50 @@
-# README.md for PandorasKey Module
+# PandorasLock Module
 
 ## Overview
 
-PandorasKey is a versatile Python module designed for sanitizing sensitive information within text data across various domains, including cloud environments, data analysis, and machine learning. Its primary function is to identify and obfuscate sensitive data such as IP addresses, account numbers, and personal identifiers, making it a valuable tool for a broad range of users concerned with data privacy and security.
+`PandorasLock` is a versatile Python module designed for the sanitization of sensitive information within text data, with a particular focus on network-related information such as IP addresses and subnets. It provides a flexible framework for obfuscating identifiable information while preserving or not preserving the relational network context, according to the needs of the application.
 
-### Key Features
+### Key Components
+- **PandorasLock**: The core class responsible for managing the sanitization process.
+- **KeyBase**: An abstract base class for defining common functionalities across different types of keys.
+- **DefaultKey**: Handles general data patterns for sanitization.
+- **NetworkKey**: Specialized in network data sanitization, with options to preserve network context.
 
-- **Universal Data Obfuscation**: Suitable for a wide array of applications beyond cloud environments, including data science, machine learning, and general data processing tasks.
-- **Customizable and Extensible**: Users can define custom regex patterns in a configuration file, allowing for the extension of the module to cover various types of sensitive information.
-- **Reversible Obfuscation**: Applies a reversal process to all incoming prompts such that replies containing keys are immediately reversed prior to being presented to the user. Offers the capability to reverse the obfuscation process, enabling the retrieval of the original text data.
-- **Stores keys**: stores keys localy through the entire conversation so that if a key is referenced again we can maintain context.
-- **Context Preservation**: Ensures that the obfuscated data retains its contextual relevance, crucial for analysis and machine learning applications.
+## Installation
 
-## Intended Use
+To install `PandorasLock`, clone or download the repository to your local environment:
 
-- **Data Security and Privacy**: Ideal for scenarios where sensitive data needs to be protected or anonymized, such as in logs, datasets, and communication scripts.
-- **Training Data Preparation**: Generates semi-synthetic datasets for machine learning, especially for NLP and LLM training, while ensuring data privacy.
-- **General Data Processing**: Useful in any context where sensitive data needs to be identified and concealed without losing the integrity of the information.
+```
+git clone git@github.com:r3d91ll/PandorasLock.git
+```
 
-## Future Enhancements
+Ensure you have Python 3.x installed and navigate into the module directory. The module can be imported directly into your Python scripts.
 
-- **Advanced Network Data Handling**: Focusing on sophisticated methods for obfuscating network-related data while maintaining relational context and utility in analysis.
-- **Expanding Data Type Coverage**: Aiming to broaden the range of detectable and obfuscatable data types to cater to diverse data security needs.
-- **Add Human/LLM**: adding separate input pathes for human and LLM input to the module
-
-## Usage Example
-
+## Usage
 
 ```python
-from PandorasKey import PandorasKey
+from pandoraslock import PandorasLock, DefaultKey, NetworkKey
 
-# Initialize with configuration file
-pandoras_key = PandorasKey(config_path="path_to_config.json")
+# Initialize the core class
+pandoras_lock = PandorasLock()
 
-# Sanitize text containing sensitive data
-sanitized_text = pandoras_key.sanitize("Sensitive text with IP: 192.168.1.1")
+# Example text to sanitize
+original_text = "Sensitive information here with IP 192.168.1.1"
+network_data = "Network configuration for subnet 192.168.1.0/24"
 
-# Reverse the sanitization to retrieve original text
-original_text = pandoras_key.reverse_sanitization(sanitized_text)
+# Sanitize using DefaultKey for general data
+sanitized_text = pandoras_lock.sanitize(original_text, DefaultKey())
 
-print("Sanitized Text:", sanitized_text)
-print("Original Text:", original_text)
+# Sanitize using NetworkKey for network data, preserving network context
+sanitized_network_data = pandoras_lock.sanitize(network_data, NetworkKey(preserve_network_context=True))
 ```
 
-## Configuration
+## Scenarios in Which PandorasLock Could Be Useful
+- **Data Privacy Compliance**: Ensuring sensitive data within documents or logs is obfuscated before sharing or analysis.
+- **Network Configuration Management**: Sanitizing network configurations for documentation or educational purposes, without revealing actual IP allocations.
+- **Machine Learning Data Preparation**: Preparing datasets that contain sensitive information by sanitizing identifiable data, making the datasets suitable for training without compromising privacy.
+- **Security Incident Reporting**: Anonymizing sensitive information in incident reports or logs that need to be shared with external parties.
 
-The module uses a JSON configuration file (`pandorasconfig.json`) for regex patterns. Users can modify this file for custom data types and patterns.
+## Note on Usage
+`PandorasLock` is designed with flexibility in mind, allowing users to easily extend its functionality to suit various sanitization needs. While it provides robust mechanisms for data sanitization, always review sanitized outputs to ensure they meet your specific privacy and security requirements.
 
-Example:
-```json
-{
-    "IP_PATTERN": "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b",
-    "CUSTOM_DATA_PATTERN": "custom_regex_here",
-    ...
-}
-```
-
-## Contributions
-
-We encourage contributions to PandorasKey. Please feel free to submit pull requests or issues on our repository for improvements or feature requests.
-
-## License
-
-PandorasKey is made available under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-*Note: This README is a guide. For detailed documentation, please refer to our official documentation.*
-
----
-
-End of README.md File for PandorasKey Module.
