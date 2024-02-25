@@ -1,4 +1,4 @@
-from KeyBase import KeyBase
+from .key_base import KeyBase
 import threading
 
 class PandorasLock:

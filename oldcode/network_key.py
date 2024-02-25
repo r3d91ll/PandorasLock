@@ -1,5 +1,6 @@
 import hashlib
 import ipaddress
+from .key_base import KeyBase
 
 class NetworkKey(KeyBase):
     pattern_key = "_NETWORK"

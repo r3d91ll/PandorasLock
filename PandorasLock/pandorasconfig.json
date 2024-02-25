@@ -1,14 +1,19 @@
 {
-    "IP_DEFAULT": "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b",
-    "CIDR_DEFAULT": "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\/(?:1[0-9]|2[0-9]|3[0-2])\\b",
-    "RDS_DEFAULT": "\\brds-[a-zA-Z0-9-]{1,63}\\b",
-    "i-_DEFAULT": "i-[0-9a-f]{8,17}",
-    "sg-_DEFAULT": "(sg-\\w{8})",
-    "vpc-_DEFAULT": "vpc-\\w{8}",
-    "subnet-_DEFAULT": "subnet-\\w{8}",
-    "vol-_DEFAULT": "(vol-\\w{8,18})",
-    "IP_NETWORK": "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b",
-    "CIDR_NETWORK": "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\/(?:1[0-9]|2[0-9]|3[0-2])\\b",
-    "SSN_DEFAULT": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
-    "AWS_ACCOUNT_NUM_DEFAULT": "\\b\\d{12}\\b"    
+    "REGEX": {
+        "AWS": {
+            "RDS": "\\brds-[a-zA-Z0-9-]{1,63}\\b",
+            "Instance": "i-[0-9a-f]{8,17}",
+            "SecurityGroup": "(sg-\\w{8})",
+            "VPC": "vpc-\\w{8}",
+            "SUBNET": "subnet-\\w{8}",
+            "VOLUME": "(vol-\\w{8,18})",
+            "ACCOUNT_NUM": "\\b\\d{12}\\b"
+        }
+    },
+    "LITERAL": {
+        "BANK_ACCOUNT": "12458796358741",
+        "EMAIL": "NAME@GMAIL.COM",
+        "PHONE": "123-456-7890",
+        "SSN": "123-45-6789"
+    }
 }
