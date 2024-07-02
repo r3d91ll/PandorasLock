@@ -160,9 +160,11 @@ cython_debug/
 #.idea/
 .vscode/
 old-code/
+oldcode/
 tmp/
 .dockerignore
 Dockerfile
 docker-compose.yml
 appmap.yml
+.devcontainer.json
 ```
