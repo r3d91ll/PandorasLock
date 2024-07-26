@@ -167,4 +167,7 @@ Dockerfile
 docker-compose.yml
 appmap.yml
 .devcontainer.json
+*/db_data/*
+db_data/*
+prompts/
 ```
