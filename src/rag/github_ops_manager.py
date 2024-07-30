@@ -3,6 +3,10 @@ from github import Github
 from git import Repo, GitCommandError
 from getpass import getpass
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,8 +19,7 @@ class GitHubOperationsManager:
 
     def initialize(self, repo_name, local_path, access_token=None):
         try:
-            if not access_token:
-                access_token = getpass("Enter your GitHub access token: ")
+            access_token = access_token or os.getenv("GITHUB_ACCESS_TOKEN") or getpass("Enter your GitHub access token: ")
             self.github_instance = Github(access_token)
             self.repo_instance = self.github_instance.get_repo(repo_name)
 
@@ -28,6 +31,25 @@ class GitHubOperationsManager:
             logger.info(f"Initialized repo: {repo_name}")
         except Exception as e:
             logger.error(f"Failed to initialize GitHub instance or repository: {e}")
+
+    def clone_repository(self, repo_name, local_path, access_token=None):
+        try:
+            access_token = access_token or os.getenv("GITHUB_ACCESS_TOKEN") or getpass("Enter your GitHub access token: ")
+            self.github_instance = Github(access_token)
+            self.repo_instance = self.github_instance.get_repo(repo_name)
+
+            if os.path.exists(local_path):
+                logger.info(f"Repository already exists at {local_path}")
+                self.local_repo = Repo(local_path)
+            else:
+                logger.info(f"Cloning repository {repo_name} to {local_path}")
+                self.local_repo = Repo.clone_from(self.repo_instance.clone_url, local_path)
+
+            logger.info(f"Successfully cloned/initialized repo: {repo_name}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to clone repository: {e}")
+            return False
 
     def pull_changes(self):
         try:
